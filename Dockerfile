@@ -8,10 +8,8 @@ RUN apt-get update && apt-get install -y \
 	sudo \
 	linux-tools-common \
 	    linux-tools-5.3.0-1030-aws \
-    default-jdk \
-    maven && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+	wget \
+	gnupg
 
 RUN export uid=1000 gid=1000 && \
     mkdir -p /home/ubuntu && \
