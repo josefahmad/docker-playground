@@ -1,3 +1,4 @@
 sudo docker build . -t josef
 sudo docker run -ti josef
+sudo sysctl -w kernel.perf_event_paranoid=-1
 sudo docker run --cap-add SYS_ADMIN josef perf stat
