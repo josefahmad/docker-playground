@@ -10,4 +10,6 @@ sudo sysctl -w kernel.kptr_restrict=0
 
 # get the container name via `sudo docker ps'
 sudo docker container exec pensive_banach perf record -a -g -o perf.data -- sleep 3
+sudo docker container exec pensive_banach perf script > perf.data.scripted
+
 sudo docker container exec -it pensive_banach bash
