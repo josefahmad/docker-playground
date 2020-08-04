@@ -10,15 +10,20 @@ sudo docker build . -t josef
 sudo docker run -d --cap-add SYS_ADMIN --network host --name josef -ti josef
 ```
 
-perf record the container.
+perf record inside container.
 ```
 # all processes
-sudo docker container exec josef perf record -a -g -o perf.data -- sleep 3
-
+sudo docker container exec josef perf record -F 99 -a -g -o perf.data -- sleep 10
 # mongod only
-sudo docker container exec josef perf record -a -g -p 1 -o perf.data -- sleep 3
+sudo docker container exec josef perf record -F 99 -a -g -p 1 -o perf.data -- sleep 10
 
 sudo docker container exec josef perf script > perf.data.scripted
+```
+
+```
+sudo perf record -a -g -F 99 -- sleep 10
+sudo perf record -a -g -F 99 -p $(pidof mongod) -- sleep 10
+sudo perf script > perf.data.scripted
 ```
 
 Attach to the container via bash.
