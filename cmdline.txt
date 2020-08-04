@@ -8,5 +8,6 @@ sudo docker run -d --cap-add SYS_ADMIN -ti josef
 sudo sysctl -w kernel.perf_event_paranoid=-1
 sudo sysctl -w kernel.kptr_restrict=0
 
-# get the josef/mongod container id via `sudo docker ps'
-sudo docker exec 26af0d7eeb39 perf record -a -g -o ~/perf.data -- sleep 3
+# get the container name via `sudo docker ps'
+sudo docker container exec pensive_banach perf record -a -g -o perf.data -- sleep 3
+sudo docker container exec -it pensive_banach bash
