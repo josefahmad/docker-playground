@@ -1,15 +1,15 @@
 FROM ubuntu:18.04
 
-ARG DRIVER_VERSION=3.12.2
-
 RUN apt-get update && apt-get install -y \
 	git \
-	nano \
+	vim \
 	sudo \
 	linux-tools-common \
-	    linux-tools-5.3.0-1030-aws \
+	linux-tools-aws \
+	mongodb \
 	wget \
 	gnupg
+
 
 RUN export uid=1000 gid=1000 && \
     mkdir -p /home/ubuntu && \
@@ -21,8 +21,14 @@ RUN export uid=1000 gid=1000 && \
 
 ENV HOME /home/ubuntu
 
+RUN mkdir -p ${HOME}/data && chown ${uid}:${gid} -R /home/ubuntu/data && chmod -R 777 ${HOME}/data
+
 WORKDIR ${HOME}
 
+ 
 USER ubuntu
 
-CMD ["/bin/bash"]  
+ENTRYPOINT ["/usr/bin/mongod", "--dbpath", "/home/ubuntu/data", "--logpath", "mongod.log"] 
+#ENTRYPOINT ["/usr/bin/mongod", "--dbpath", "/home/ubuntu/data", "--logpath", "mongod.log", "--fork"] 
+#CMD ["/usr/bin/mongod --dbpath ${HOME}/data --logpath ${HOME}/mongod.log --fork"]  
+#CMD ["/bin/bash"]  

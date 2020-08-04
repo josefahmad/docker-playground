@@ -3,14 +3,12 @@
 https://docs.docker.com/engine/install/ubuntu/
 
 sudo docker build . -t josef
-sudo docker run -ti josef
+sudo docker run --cap-add SYS_ADMIN josef perf stat
 
 # inside the container
 https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu
 
 sudo sysctl -w kernel.perf_event_paranoid=-1
 sudo sysctl -w kernel.kptr_restrict=0
-sudo docker run --cap-add SYS_ADMIN josef perf stat
 
-# todo find out how to persist perf.data
-sudo docker run --cap-add SYS_ADMIN josef perf record -a -g -o ~/perf.data -- sleep 10
+sudo docker exec 26af0d7eeb39 perf record -a -g -o ~/perf.data -- sleep 3
